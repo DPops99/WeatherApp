@@ -1,6 +1,21 @@
 <resources>
-    <string name="app_name">proba</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Third Task</string>
+    <string name="input_menu">Input</string>
+    <string name="show_menu">Show</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="oib">OIB</string>
+    <string name="age">Age</string>
+    <string name="workplace">WORKPLACE</string>
+    <string name="btn_save">SAVE</string>
+    <string name="text_view_welcome">Hello Teta iz menze, please enter your information!</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="email">email</string>
+    <string name="address">address</string>
+    <string name="first">first</string>
+    <string name="second">second</string>
+    <string name="gender">GENDER</string>
+    <string name="job_shift">JOB SHIFT</string>
+    <string name="job_position">JOB POSITION</string>
 </resources>
