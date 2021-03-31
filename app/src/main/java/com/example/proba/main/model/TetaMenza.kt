@@ -15,7 +15,8 @@ class TetaMenza constructor(
     var job_position : Job_Position,
     var job_shift : String,
     var email : String,
-    var address : String
+    var address : String,
+    var image : String
 ):Serializable{
 
     override fun toString(): String {

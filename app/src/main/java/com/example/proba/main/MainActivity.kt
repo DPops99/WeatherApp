@@ -7,7 +7,9 @@ import com.example.proba.databinding.ActivityMainBinding
 import com.example.proba.R
 import com.example.proba.main.first_fragment.InputFragment
 import com.example.proba.main.second_fragment.ShowFragment
-import com.google.android.material.bottomnavigation.BottomNavigationMenu
+import com.example.proba.main.third_fragment.SettingsFragment
+import com.google.android.material.snackbar.Snackbar
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,8 +24,15 @@ class MainActivity : AppCompatActivity() {
         if(savedInstanceState==null)
             setCurrentFragment(InputFragment())
 
+
         setListeners()
 
+        val bundle = intent.getStringExtra(getString(R.string.snackbar_bundle))
+        if (bundle != null){
+
+            Snackbar.make(binding.root, R.string.language_changed, Snackbar.LENGTH_LONG).show()
+
+        }
     }
 
     fun setListeners(){
@@ -31,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.input_menu -> setCurrentFragment(InputFragment())
                 R.id.show_menu -> setCurrentFragment(ShowFragment())
+                R.id.settings_menu -> setCurrentFragment(SettingsFragment())
             }
             true
         }

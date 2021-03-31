@@ -18,4 +18,11 @@
     <string name="gender">GENDER</string>
     <string name="job_shift">JOB SHIFT</string>
     <string name="job_position">JOB POSITION</string>
+    <string name="teta_menza_bundle">TETA MENZA BUNDLE</string>
+    <string name="profile_img">PROFILE IMAGE</string>
+    <string name="change_language">CHANGE LANGUAGE</string>
+    <string name="settings_menu">Settings</string>
+    <string name="snackbar_bundle">SNACKBAR BUNDLE</string>
+    <string name="language_changed">Language changed</string>
+    <string name="undo">UNDO</string>
 </resources>
