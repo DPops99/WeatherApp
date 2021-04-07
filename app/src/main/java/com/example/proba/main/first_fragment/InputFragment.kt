@@ -3,6 +3,7 @@ package com.example.proba.main.first_fragment
 
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewModelScope
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.proba.R
@@ -19,6 +21,8 @@ import com.example.proba.main.model.TetaMenza
 import com.example.proba.main.model.enums.Job_Position
 import com.example.proba.main.model.enums.Workplace
 import com.example.proba.main.view_model.CustomViewModel
+import com.example.proba.network.repository.Repository
+import kotlinx.coroutines.launch
 
 class InputFragment : Fragment() {
 
@@ -40,6 +44,11 @@ class InputFragment : Fragment() {
         setView()
         setSpinners()
         setListeners()
+
+        viewModel.viewModelScope.launch {
+           Log.d("back",Repository().getDay(44418,"2013/4/27")[0].toString())
+        }
+
 
         return view
     }
