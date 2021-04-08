@@ -5,22 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.proba.R
 import com.example.proba.databinding.ShowFragmentBinding
-import com.example.proba.main.model.TetaMenza
-import com.example.proba.main.second_fragment.adapter.SearchAdapter
+import com.example.proba.main.first_fragment.adapter.SearchAdapter
 import com.example.proba.main.second_fragment.adapter.TetaAdapter
 import com.example.proba.main.view_model.ApiViewModel
 import com.example.proba.main.view_model.CustomViewModel
-import com.example.proba.network.model.Day
 import com.example.proba.singleTeta.SingleTetaActivity
-import com.google.android.material.snackbar.Snackbar
 
 class ShowFragment : Fragment(), TetaAdapter.OnItemClickListener, SearchAdapter.OnItemClickListener {
 

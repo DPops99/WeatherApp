@@ -1,5 +1,6 @@
 package com.example.proba.network.api
 
+import com.example.proba.network.model.City
 import com.example.proba.network.model.Day
 import com.example.proba.network.model.Search
 import retrofit2.http.GET
@@ -16,5 +17,9 @@ interface MetaWeatherService {
 
     @GET("/api/location/search/")
     suspend fun getSearch(@Query("query") search_names : String) : List<Search>
+
+    @GET("/api/location/{woeid}/")
+    suspend fun getCity(@Path("woeid") city_location : String) : City
+
 
 }

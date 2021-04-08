@@ -1,20 +1,14 @@
-package com.example.proba.main.second_fragment.adapter
+package com.example.proba.main.first_fragment.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.transform.CircleCropTransformation
-import com.example.proba.R
 import com.example.proba.databinding.CityItemViewBinding
-import com.example.proba.databinding.TetaViewItemBinding
-import com.example.proba.main.model.TetaMenza
-import com.example.proba.network.model.Day
 import com.example.proba.network.model.Search
 
-class SearchAdapter(var cities : List<Search>, val contex : Context, var listener: SearchAdapter.OnItemClickListener)  : RecyclerView.Adapter<SearchAdapter.SearchHolder>(){
+class SearchAdapter(var cities : List<Search>, val contex : Context, var listener: OnItemClickListener)  : RecyclerView.Adapter<SearchAdapter.SearchHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
         return SearchHolder(CityItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false))

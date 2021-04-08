@@ -1,3 +1,5 @@
 package com.example.proba.singleCity.model
 
-data class ParentModel (var title : String="", val children : List<ChildModel>)
+import com.example.proba.network.model.Day
+
+data class ParentModel (var title : String, val children : List<Day>)

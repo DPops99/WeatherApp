@@ -1,6 +1,7 @@
 package com.example.proba.network.repository
 
 import com.example.proba.network.api.MetaWeatherService
+import com.example.proba.network.model.City
 import com.example.proba.network.model.Day
 import com.example.proba.network.model.Search
 import retrofit2.Retrofit
@@ -21,11 +22,15 @@ class Repository {
     }
 
     suspend fun getDay(world_location : Int, date: String): List<Day> {
-        return service.getDay(world_location.toString(), date)
+        return service.getDay(world_location.toString(), date.replace("-","/"))
     }
 
     suspend fun getSearch(search_name : String):List<Search>{
         return service.getSearch(search_name)
+    }
+
+    suspend fun getCity(city_location : Int):City{
+        return service.getCity(city_location.toString())
     }
 
 
