@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Treci zadatak</string>
+    <string name="input_menu">Unos</string>
+    <string name="show_menu">Prikazi</string>
+    <string name="first_name">Ime</string>
+    <string name="last_name">Prezime</string>
+    <string name="oib">OIB</string>
+    <string name="age">Godina</string>
+    <string name="workplace">RADNO MJESTO</string>
+    <string name="btn_save">SPREMI</string>
+    <string name="text_view_welcome">Pozdrav Teta iz menze, molimo unesite vase podatke!</string>
+    <string name="male">musko</string>
+    <string name="female">zensko</string>
+    <string name="email">email</string>
+    <string name="address">adresa</string>
+    <string name="first">prva</string>
+    <string name="second">druga</string>
+    <string name="gender">SPOL</string>
+    <string name="job_shift">SMJENA</string>
+    <string name="job_position">POZICIJA</string>
+    <string name="teta_menza_bundle">TETA MENZA BUNDLE</string>
+    <string name="profile_img">PROFILNA SLIKA</string>
+    <string name="change_language">PROMJENA JEZIKA</string>
+    <string name="settings_menu">Postavke</string>
+    <string name="snackbar_bundle">SNACKBAR BUNDLE</string>
+    <string name="language_changed">Jezik promijenjen</string>
+    <string name="undo">PONISTI</string>
+</resources>

@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.proba.R
 import com.example.proba.databinding.InputFragmentBinding
 import com.example.proba.main.model.TetaMenza
@@ -44,6 +46,9 @@ class InputFragment : Fragment() {
 
 
     fun setView(){
+
+
+
         binding.firstName.textView.text = getString(R.string.first_name).toUpperCase()
 
         binding.lastName.textView.text = getString(R.string.last_name).toUpperCase()
@@ -105,21 +110,29 @@ class InputFragment : Fragment() {
             }
             else if (binding.email.editText.text.toString().contains("@")){
                 var checked_gender : String
+                var profile_img = ""
                 when(binding.gender.checkedRadioButtonId){
-                    R.id.radio_btn_female -> checked_gender = getString(R.string.female)
-                    R.id.radio_btn_male -> checked_gender = getString(R.string.male)
-                    else -> checked_gender = getString(R.string.female)
+                    R.id.radio_btn_female -> {checked_gender = getString(R.string.female)
+                                                profile_img = "https://static.thenounproject.com/png/17239-200.png"}
+                    R.id.radio_btn_male -> {checked_gender = getString(R.string.male)
+                                                profile_img = "https://static.thenounproject.com/png/17241-200.png"}
+                    else -> {checked_gender = getString(R.string.female)
+                                profile_img = "https://static.thenounproject.com/png/17239-200.png"}
                 }
 
                 var checked_shift : String
+
                 when(binding.jobShift.checkedRadioButtonId){
                     R.id.radio_first -> checked_shift = getString(R.string.first)
                     R.id.radio_second -> checked_shift = getString(R.string.second)
                     else -> checked_shift = getString(R.string.second)
                 }
+
+
+
                 viewModel.addTeta(TetaMenza(binding.firstName.editText.text.toString(),binding.lastName.editText.text.toString(),workplace,
                     binding.age.editText.text.toString().toInt(),binding.OIB.editText.text.toString().toInt(), checked_gender,
-                    job_position, checked_shift, binding.email.editText.text.toString(), binding.address.editText.text.toString()))
+                    job_position, checked_shift, binding.email.editText.text.toString(), binding.address.editText.text.toString(),profile_img))
                 clearEditTextFields()
             }
             else{
