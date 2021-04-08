@@ -26,5 +26,7 @@ class SingleCityActivity : AppCompatActivity() {
             setDisplayShowHomeEnabled(true)
         }
 
+
+
     }
 }
