@@ -1,6 +1,7 @@
 package com.example.proba.main.first_fragment
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -16,6 +17,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.proba.R
 import com.example.proba.databinding.SearchFragmentBinding
 import com.example.proba.main.model.TetaMenza
 import com.example.proba.main.model.enums.Job_Position
@@ -25,6 +27,7 @@ import com.example.proba.main.view_model.ApiViewModel
 import com.example.proba.main.view_model.CustomViewModel
 import com.example.proba.network.model.Search
 import com.example.proba.network.repository.Repository
+import com.example.proba.singleCity.SingleCityActivity
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
@@ -84,7 +87,11 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
 
     override fun onItemClick(position: Int) {
-
+//        val bundle : Bundle = Bundle()
+//        bundle.putSerializable(getString(R.string.teta_menza_bundle),adapter.tete[position])
+        val intent : Intent = Intent(this.context, SingleCityActivity::class.java)
+//        intent.putExtra(getString(R.string.teta_menza_bundle),adapter.tete[position])
+        startActivity(intent)
     }
 
 }

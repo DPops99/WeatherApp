@@ -55,10 +55,10 @@ class ShowFragment : Fragment(), TetaAdapter.OnItemClickListener, SearchAdapter.
     }
 
     override fun onItemClick(position: Int) {
-//        val bundle : Bundle = Bundle()
-//        bundle.putSerializable(getString(R.string.teta_menza_bundle),adapter.tete[position])
-//        val intent : Intent = Intent(this.context, SingleTetaActivity::class.java)
-//        intent.putExtra(getString(R.string.teta_menza_bundle),adapter.tete[position])
-//        startActivity(intent)
+        val bundle : Bundle = Bundle()
+        bundle.putSerializable(getString(R.string.teta_menza_bundle),adapter.tete[position])
+        val intent : Intent = Intent(this.context, SingleTetaActivity::class.java)
+        intent.putExtra(getString(R.string.teta_menza_bundle),adapter.tete[position])
+        startActivity(intent)
     }
 }
