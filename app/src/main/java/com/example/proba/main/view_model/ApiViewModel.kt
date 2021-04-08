@@ -1,19 +1,34 @@
 package com.example.proba.main.view_model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.proba.network.model.Day
+import com.example.proba.network.model.Search
 import com.example.proba.network.repository.Repository
+import kotlinx.coroutines.launch
 
 class ApiViewModel : ViewModel(){
 
-    var api_days : LiveData<List<Day>> = liveData {
-        emit(getApiDays(44418,"2013/4/27"))
+    private val _api_days = MutableLiveData<List<Search>>()
+    val api_days : LiveData<List<Search>> = _api_days
+
+    init {
+        viewModelScope.launch {
+            _api_days.value = Repository().getSearch("london")
+        }
+
     }
 
 
-    suspend fun getApiDays(location : Int, date : String):List<Day>{
-        return Repository().getDay(location, date)
+    fun get_api_search(search_name : String){
+        Log.d("BACK_API","I'll be back")
+
+        viewModelScope.launch {
+            Log.d("BACK_API","I'm back")
+            _api_days.value =  Repository().getSearch(search_name)
+        }
+
+
+
     }
 }

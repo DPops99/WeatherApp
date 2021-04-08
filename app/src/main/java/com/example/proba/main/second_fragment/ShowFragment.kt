@@ -12,18 +12,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.proba.R
-import com.example.proba.databinding.InputFragmentBinding
 import com.example.proba.databinding.ShowFragmentBinding
 import com.example.proba.main.model.TetaMenza
+import com.example.proba.main.second_fragment.adapter.SearchAdapter
 import com.example.proba.main.second_fragment.adapter.TetaAdapter
-import com.example.proba.main.second_fragment.adapter.WeatherAdapter
 import com.example.proba.main.view_model.ApiViewModel
 import com.example.proba.main.view_model.CustomViewModel
 import com.example.proba.network.model.Day
 import com.example.proba.singleTeta.SingleTetaActivity
 import com.google.android.material.snackbar.Snackbar
 
-class ShowFragment : Fragment(), TetaAdapter.OnItemClickListener, WeatherAdapter.OnItemClickListener {
+class ShowFragment : Fragment(), TetaAdapter.OnItemClickListener, SearchAdapter.OnItemClickListener {
 
     private val viewModel : CustomViewModel by activityViewModels()
     private val apiViewModel : ApiViewModel by activityViewModels()
