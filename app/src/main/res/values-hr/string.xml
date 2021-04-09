@@ -34,4 +34,5 @@
     <string name="accuracy">TOČNOST</string>
     <string name="today">Danas</string>
     <string name="next_days">Sljedecih 5 dana</string>
+    <string name="search">Pretrazi</string>
 </resources>

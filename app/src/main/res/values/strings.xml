@@ -33,4 +33,5 @@
     <string name="undo">UNDO</string>
     <string name="today">Today</string>
     <string name="next_days">Next 5 days</string>
+    <string name="search">Search</string>
 </resources>
