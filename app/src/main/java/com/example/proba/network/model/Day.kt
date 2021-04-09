@@ -17,5 +17,6 @@ data class Day (
     var air_pressure : Float?,
     var humidity : Int?,
     var visibility : Float?,
-    var predictability : Int?
+    var predictability : Int?,
+    var created : String?
         ): Serializable

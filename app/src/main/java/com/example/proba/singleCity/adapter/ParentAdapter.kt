@@ -3,11 +3,10 @@ package com.example.proba.singleCity.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.proba.R
 import com.example.proba.databinding.ParentRecyclerBinding
-import com.example.proba.singleCity.model.ChildModel
 import com.example.proba.singleCity.model.ParentModel
 
 class ParentAdapter(private val parents : List<ParentModel>, private val context : Context) : RecyclerView.Adapter<ParentAdapter.ParentHolder>()  {
@@ -26,7 +25,10 @@ class ParentAdapter(private val parents : List<ParentModel>, private val context
         holder.binding.prTitle.text = parents[position].title
         holder.binding.prRv.apply {
             layoutManager = LinearLayoutManager(holder.binding.prRv.context,RecyclerView.HORIZONTAL,false)
-            adapter = ChildAdapter(parents[position].children, parents[position].title, context)
+            if (parents[position].title != context.getString(R.string.today))
+                adapter = ChildAdapter(parents[position].children, parents[position].title, context)
+            else
+                adapter = ChildAdapter(parents[position].children.subList(0,10), parents[position].title, context)
             setRecycledViewPool(viewPool)
         }
     }

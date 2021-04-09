@@ -48,8 +48,8 @@
 
         <ImageView
             android:id="@+id/city_w_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/city_name"
             android:src="@drawable/ic_baseline_people_24"
@@ -63,8 +63,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/city_w_img"
             app:layout_constraintTop_toBottomOf="@+id/city_name"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="20dp"
             android:text="20°"
             android:textSize="30sp"
 

@@ -9,5 +9,6 @@ data class City (
     var latt_long : String?,
     var time : String?,
     var timezone_name : String?,
+    var woeid : Int?,
     var consolidated_weather : List<Day>?
         ) : Serializable

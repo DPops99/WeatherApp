@@ -4,12 +4,14 @@ package com.example.proba.main.first_fragment
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
@@ -19,9 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.proba.databinding.SearchFragmentBinding
 import com.example.proba.main.first_fragment.adapter.SearchAdapter
 import com.example.proba.main.view_model.ApiViewModel
+import com.example.proba.network.model.City
 import com.example.proba.network.model.Day
 import com.example.proba.network.model.Search
 import com.example.proba.singleCity.SingleCityActivity
+import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 
 class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
@@ -31,6 +35,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     private val binding get() = _binding!!
     private lateinit var adapter : SearchAdapter
     private var current_adapter_position : Int? = null
+    private lateinit var current_city : City
     val day_bundle = "DAY_BUNDLE"
     val city_bundle = "CITY_BUNDLE"
 
@@ -41,15 +46,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     ): View? {
         _binding = SearchFragmentBinding.inflate(inflater,container,false)
         val view = binding.root
-
-
         setView()
-//
-//        apiViewModel.viewModelScope.launch {
-//           Log.d("back",Repository().getDay(44418,"2013/4/27")[0].toString())
-//        }
-
-
         return view
     }
 
@@ -57,33 +54,31 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     fun setView(){
 
         binding.searchRecyclerView.layoutManager =  LinearLayoutManager(requireContext())
-        adapter = SearchAdapter(ArrayList<Search>(),this.requireContext(), this)
+        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this)
         binding.searchRecyclerView.adapter = adapter
         apiViewModel.api_search.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                adapter.cities = it
-                adapter.notifyDataSetChanged()
+                Toast.makeText(this.requireContext(), "Waiting for results",Toast.LENGTH_LONG).show()
+                apiViewModel.get_api_cities()
             }
         })
 
-        apiViewModel.api_city.observe(viewLifecycleOwner, Observer {
+        apiViewModel.api_cities.observe(viewLifecycleOwner, Observer {
             if(it != null){
-                it.consolidated_weather?.get(0)?.applicable_date?.let { it1 -> apiViewModel.get_api_day(adapter.cities[current_adapter_position!!].woeid!!, it1)}
-//                val intent : Intent = Intent(this.context, SingleCityActivity::class.java)
-//                intent.putExtra(search_fragment_bundle, it)
-//                startActivity(intent)
+                adapter.cities = it
+                adapter.notifyDataSetChanged()
+                Log.d("BEFORE_LIFTOF",it.toString())
             }
         })
+
+
 
 
         apiViewModel.api_day.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val intent : Intent = Intent(this.context, SingleCityActivity::class.java)
-                Log.d("BEFORE_LIFTOF",(it as Serializable).toString())
                 intent.putExtra(day_bundle, it as Serializable)
-                intent.putExtra(city_bundle, apiViewModel.api_city.value)
-
-
+                intent.putExtra(city_bundle, current_city)
                 startActivity(intent)
             }
         })
@@ -93,7 +88,10 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query!=null) {
                     Log.d("BACK_API","got from search view")
-                    apiViewModel.get_api_search(query)
+                    if (isNetworkConnected())
+                        apiViewModel.get_api_search(query)
+                    else
+                        Toast.makeText(context, "No internet connection, please connect",Toast.LENGTH_LONG).show()
                 }
                 return false
             }
@@ -105,24 +103,26 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
 
     override fun onItemClick(position: Int) {
-//        val bundle : Bundle = Bundle()
-//        bundle.putSerializable(getString(R.string.teta_menza_bundle),adapter.tete[position])
-        if (adapter.cities[position].woeid != null) {
-            current_adapter_position = position
-            apiViewModel.get_api_city(adapter.cities[position].woeid!!)
-        }
+        if (adapter.cities[position].woeid != null ) {
 
-//        intent.putExtra(getString(R.string.teta_menza_bundle),adapter.tete[position])
-
+                    current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+                    current_city.consolidated_weather?.get(0)?.applicable_date?.let {
+                        Log.d("DAY_API",adapter.cities[position].woeid.toString())
+                        Log.d("DAY_API",it)
+                        apiViewModel.get_api_day(adapter.cities[position].woeid!!, it)
+                    }
+                }
     }
 
 
-//    @RequiresApi(Build.VERSION_CODES.M)
-//    private fun isNetworkConnected() : Boolean{
-//
-//        val conn_manager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        val active_network = conn_manager.activeNetwork
-//
-//    }
+
+    private fun isNetworkConnected() : Boolean{
+
+        val cm =context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        return isConnected
+    }
 
 }

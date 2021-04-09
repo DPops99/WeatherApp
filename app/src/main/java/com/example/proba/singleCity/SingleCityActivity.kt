@@ -2,20 +2,15 @@ package com.example.proba.singleCity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.proba.R
 import com.example.proba.databinding.ActivitySingleCityBinding
-import com.example.proba.databinding.ActivitySingleTetaBinding
-import com.example.proba.databinding.SearchFragmentBinding
 import com.example.proba.main.first_fragment.SearchFragment
 import com.example.proba.network.model.City
 import com.example.proba.network.model.Day
 import com.example.proba.singleCity.adapter.ParentAdapter
-import com.example.proba.singleCity.model.ChildModel
 import com.example.proba.singleCity.model.ParentModel
 import java.text.SimpleDateFormat
 import kotlin.math.round
@@ -85,15 +80,11 @@ class SingleCityActivity : AppCompatActivity() {
             binding.wiAcc.wIcon.load(R.drawable.ic_accuracy)
             binding.wiAcc.wValue.text =  """${current_city.consolidated_weather?.get(0)?.predictability?.toString()}%"""
 
-//            Log.d("WHATISSENT",intent.getSerializableExtra(SearchFragment().city_bundle).toString())
 
         }
 
         intent?.getSerializableExtra(SearchFragment().day_bundle)?.let{
-//            Log.d("WHATISSENT",intent.getSerializableExtra(SearchFragment().day_bundle).toString())
             current_day = intent.getSerializableExtra(SearchFragment().day_bundle) as List<Day>
-
-
         }
 
 
@@ -109,18 +100,10 @@ class SingleCityActivity : AppCompatActivity() {
     private fun getData() : List<ParentModel>{
         val parents = mutableListOf<ParentModel>()
 
-        parents.add(ParentModel("Today",current_day))
-        parents.add(ParentModel("Next 5 days",current_city.consolidated_weather!!.subList(1, current_city.consolidated_weather!!.size)))
+        parents.add(ParentModel(getString(R.string.today),current_day))
+        parents.add(ParentModel(getString(R.string.next_days),current_city.consolidated_weather!!.subList(1, current_city.consolidated_weather!!.size)))
 
         return parents
-    }
-
-    private fun getChildren(count : Int) : List<ChildModel>{
-        val children = mutableListOf<ChildModel>()
-        repeat(count){
-            children.add(ChildModel("dijete"))
-        }
-        return children
     }
 
     fun String.capitalizeWords() : String = split(" ").joinToString(" "){it.capitalize()}
