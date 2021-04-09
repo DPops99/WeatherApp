@@ -10,6 +10,7 @@ data class Day (
     var weather_state_abbr : String?,
     var wind_speed : Float?,
     var wind_direction : Float?,
+    var wind_direction_compass : String?,
     var min_temp : Float?,
     var max_temp : Float?,
     var the_temp : Float?,

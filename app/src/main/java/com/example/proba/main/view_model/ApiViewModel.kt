@@ -7,6 +7,7 @@ import com.example.proba.network.model.Day
 import com.example.proba.network.model.Search
 import com.example.proba.network.repository.Repository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ApiViewModel : ViewModel(){
 
@@ -16,11 +17,11 @@ class ApiViewModel : ViewModel(){
 
 //    val api_days : LiveData<List<Search>> = _api_city
 
-    init {
-        viewModelScope.launch {
-            api_search.value = Repository().getSearch("london")
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            api_search.value = Repository().getSearch("london")
+//        }
+//    }
 
 
     fun get_api_search(search_name : String){

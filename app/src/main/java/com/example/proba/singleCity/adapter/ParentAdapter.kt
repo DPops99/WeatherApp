@@ -1,5 +1,6 @@
 package com.example.proba.singleCity.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -9,7 +10,7 @@ import com.example.proba.databinding.ParentRecyclerBinding
 import com.example.proba.singleCity.model.ChildModel
 import com.example.proba.singleCity.model.ParentModel
 
-class ParentAdapter(private val parents : List<ParentModel>) : RecyclerView.Adapter<ParentAdapter.ParentHolder>()  {
+class ParentAdapter(private val parents : List<ParentModel>, private val context : Context) : RecyclerView.Adapter<ParentAdapter.ParentHolder>()  {
 
     private val viewPool = RecyclerView.RecycledViewPool()
 
@@ -25,7 +26,7 @@ class ParentAdapter(private val parents : List<ParentModel>) : RecyclerView.Adap
         holder.binding.prTitle.text = parents[position].title
         holder.binding.prRv.apply {
             layoutManager = LinearLayoutManager(holder.binding.prRv.context,RecyclerView.HORIZONTAL,false)
-            adapter = ChildAdapter(parents[position].children)
+            adapter = ChildAdapter(parents[position].children, parents[position].title, context)
             setRecycledViewPool(viewPool)
         }
     }

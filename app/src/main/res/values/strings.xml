@@ -24,5 +24,13 @@
     <string name="settings_menu">Settings</string>
     <string name="snackbar_bundle">SNACKBAR BUNDLE</string>
     <string name="language_changed">Language changed</string>
+    <string name="min_max_temp">MIN / MAX</string>
+    <string name="wind">WIND</string>
+    <string name="humidity">HUMIDITY</string>
+    <string name="pressure">PRESSURE</string>
+    <string name="visibilty">VISIBILITY</string>
+    <string name="accuracy">ACCURACY</string>
     <string name="undo">UNDO</string>
+    <string name="today">Today</string>
+    <string name="next_days">Next 5 days</string>
 </resources>

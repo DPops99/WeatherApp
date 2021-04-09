@@ -100,8 +100,8 @@
 
                 <TextView
                     android:id="@+id/sc_temp"
-                    android:layout_width="96dp"
-                    android:layout_height="64dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
                     android:text="23°"
