@@ -15,12 +15,13 @@ class RoomViewModel(roomDB : AppDatabase): ViewModel() {
 
 
     val cities = MutableLiveData<List<City>>()
-    val fav_cities = MutableLiveData<List<Favorite>>()
+    val fav_cities = MutableLiveData<List<City>>()
     val roomDB : AppDatabase
 
 
     init {
         this.roomDB = roomDB
+        getCities()
         getFavCities()
     }
 
@@ -29,6 +30,14 @@ class RoomViewModel(roomDB : AppDatabase): ViewModel() {
     fun getCities(){
         viewModelScope.launch {
             cities.value = roomDB.cityDao().getAllCities()
+        }
+    }
+
+    fun saveAndGetFavCity(apiCity: City){
+        viewModelScope.launch {
+            roomDB.cityDao().insertCity(apiCity)
+            fav_cities.value = roomDB.cityDao().getFavoriteCities()
+            Log.d("FAVCITY_SAVED",cities.value.toString())
         }
     }
 
@@ -42,6 +51,7 @@ class RoomViewModel(roomDB : AppDatabase): ViewModel() {
         viewModelScope.launch {
             roomDB.cityDao().insertCity(apiCity)
             cities.value = roomDB.cityDao().getAllCities()
+//            fav_cities.value = roomDB.cityDao().getFavoriteCities()
             Log.d("CITY_SAVED",cities.value.toString())
         }
     }
@@ -56,20 +66,20 @@ class RoomViewModel(roomDB : AppDatabase): ViewModel() {
     fun saveAndGetFavCities(fav : Favorite){
         viewModelScope.launch {
             roomDB.favoriteDao().insertFavorite(fav)
-            fav_cities.value = roomDB.favoriteDao().getAllFavorites()
+            fav_cities.value = roomDB.cityDao().getFavoriteCities()
         }
     }
 
     fun deleteAndGetFavCities(fav: Favorite){
         viewModelScope.launch {
             roomDB.favoriteDao().deleteFavorite(fav.city.woeid)
-            fav_cities.value = roomDB.favoriteDao().getAllFavorites()
+            fav_cities.value = roomDB.cityDao().getFavoriteCities()
         }
     }
 
     fun getFavCities(){
         viewModelScope.launch {
-            fav_cities.value = roomDB.favoriteDao().getAllFavorites()
+            fav_cities.value = roomDB.cityDao().getFavoriteCities()
         }
     }
 

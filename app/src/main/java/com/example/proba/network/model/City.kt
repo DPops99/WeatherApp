@@ -17,7 +17,13 @@ data class City (
     var time : String,
     var timezone_name : String,
     @TypeConverters(Converter::class)
-    var consolidated_weather : List<Day>
+    var consolidated_weather : List<Day>,
+    @Transient
+    @ColumnInfo(name = "isFavorite")
+    var favorite : Boolean = false,
+    @Transient
+    @ColumnInfo(name = "isRecent")
+    var recent : Boolean = false
         ) : Serializable
         {
             constructor(title: String, location_type: String, latt_long: String, time: String, timezone_name: String, woeid: Int) :

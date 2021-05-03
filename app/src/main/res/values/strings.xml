@@ -35,4 +35,5 @@
     <string name="next_days">Next 5 days</string>
     <string name="search">Search</string>
     <string name="my_cities">My Cities</string>
+    <string name="recent">Recent</string>
 </resources>

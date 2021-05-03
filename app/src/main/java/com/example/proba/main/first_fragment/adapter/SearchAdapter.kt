@@ -32,25 +32,24 @@ class SearchAdapter(var cities : ArrayList<City>, val context : Context, var lis
         var logo_draw = context.resources.getDrawable(img_res)
         holder.binding.cityWImg.load(logo_draw)
 
+        if (cities[position].favorite)
+            holder.binding.imgStar.load(R.drawable.ic_star_1)
+        else
+            holder.binding.imgStar.load(R.drawable.ic_star_0)
+
         if (listener!=null){
             holder.binding.imgStar.setOnClickListener {
 
 
-                    var isFav = false
-                    if (holder.binding.imgStar.tag == null) {
+                    if (cities[position].favorite){
                         holder.binding.imgStar.load(R.drawable.ic_star_0)
-                        holder.binding.imgStar.tag = "0"
-                        isFav = false
-                    } else {
-                        holder.binding.imgStar.load(R.drawable.ic_star_1)
-                        holder.binding.imgStar.tag = null
-                        isFav = true
                     }
-                    listener?.onItemClick(position, isFav)
+                    else
+                        holder.binding.imgStar.load(R.drawable.ic_star_1)
+                    listener?.onItemClick(position, !cities[position].favorite)
             }
         }
-        else
-            holder.binding.imgStar.load(R.drawable.ic_star_1)
+
 
     }
 

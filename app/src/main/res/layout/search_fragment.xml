@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".main.first_fragment.SearchFragment">
+    tools:context=".main.first_fragment.SearchFragment"
+    android:background="#eaf4fc">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_toolbar"
@@ -33,6 +34,16 @@
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
+    
+    <TextView
+        android:id="@+id/recent"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="@string/recent"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler_view"

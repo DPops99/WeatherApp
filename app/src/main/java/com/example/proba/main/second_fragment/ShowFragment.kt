@@ -80,11 +80,7 @@ class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapte
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
         roomViewModel.fav_cities.observe(viewLifecycleOwner, Observer {
             if(it!=null){
-                var fav_cities = ArrayList<City>()
-                it.forEach {
-                    fav_cities.add(it.city)
-                }
-                adapter.cities = fav_cities
+                adapter.cities = it as ArrayList<City>
                 adapter.notifyDataSetChanged()
             }
         })
