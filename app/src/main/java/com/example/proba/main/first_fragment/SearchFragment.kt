@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.proba.databinding.SearchFragmentBinding
 import com.example.proba.main.first_fragment.adapter.SearchAdapter
@@ -24,13 +25,20 @@ import com.example.proba.main.view_model.ApiViewModel
 import com.example.proba.network.model.City
 import com.example.proba.network.model.Day
 import com.example.proba.network.model.Search
+import com.example.proba.room.database.AppDatabase
+import com.example.proba.room.model.Favorite
+import com.example.proba.room.viewmodel.RoomFactory
+import com.example.proba.room.viewmodel.RoomViewModel
 import com.example.proba.singleCity.SingleCityActivity
 import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 
-class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
+class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, SearchAdapter.OnItemClickListener {
 
     private val apiViewModel : ApiViewModel by activityViewModels()
+    private lateinit var roomViewModel : RoomViewModel
+    private lateinit var roomViewModelFactory : RoomFactory
+    private lateinit var roomDB : AppDatabase
     private var _binding : SearchFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter : SearchAdapter
@@ -46,6 +54,9 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     ): View? {
         _binding = SearchFragmentBinding.inflate(inflater,container,false)
         val view = binding.root
+        roomDB = AppDatabase.getInstance(requireContext())!!
+        roomViewModelFactory = RoomFactory(roomDB)
+        roomViewModel = ViewModelProvider(this,roomViewModelFactory).get(RoomViewModel::class.java)
         setView()
         return view
     }
@@ -54,7 +65,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     fun setView(){
 
         binding.searchRecyclerView.layoutManager =  LinearLayoutManager(requireContext())
-        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this)
+        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this, this)
         binding.searchRecyclerView.adapter = adapter
         apiViewModel.api_search.observe(viewLifecycleOwner, Observer {
             if (it != null) {
@@ -68,6 +79,14 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                 adapter.cities = it
                 adapter.notifyDataSetChanged()
                 Log.d("BEFORE_LIFTOF",it.toString())
+                roomViewModel.saveAndGetCities(it, roomDB)
+            }
+        })
+
+
+        roomViewModel.cities.observe(viewLifecycleOwner, Observer {
+            if(it!=null){
+                Log.d("ROOMVIEWMODEL",it.toString())
             }
         })
 
@@ -99,10 +118,16 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                 return false
             }
         })
+
+        roomViewModel.fav_cities.observe(viewLifecycleOwner, Observer {
+            Log.d("FAVORITE_SAVED",it.toString())
+        })
+
+
     }
 
 
-    override fun onItemClick(position: Int) {
+    override fun onItemLongClick(position: Int) {
         if (adapter.cities[position].woeid != null ) {
 
                     current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
@@ -112,6 +137,14 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                         apiViewModel.get_api_day(adapter.cities[position].woeid!!, it)
                     }
                 }
+    }
+
+    override fun onItemClick(position: Int, isFav : Boolean) {
+        current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+        if (isFav)
+            roomViewModel.saveAndGetFavCities(Favorite(0,current_city), roomDB)
+        else
+            roomViewModel.deleteAndGetFavCities(Favorite(0,current_city),roomDB)
     }
 
 

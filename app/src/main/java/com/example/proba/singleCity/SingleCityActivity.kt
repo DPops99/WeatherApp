@@ -44,6 +44,7 @@ class SingleCityActivity : AppCompatActivity() {
 
     private fun setView() {
 
+
         intent?.getSerializableExtra(SearchFragment().city_bundle)?.let {
             current_city = intent.getSerializableExtra(SearchFragment().city_bundle) as City
 
@@ -55,6 +56,13 @@ class SingleCityActivity : AppCompatActivity() {
             binding.scWeather.text = current_city.consolidated_weather?.get(0)?.weather_state_name
             binding.scDate.text = date.capitalizeWords()
             binding.scTime.text = """$time (${current_city.timezone_name})"""
+
+            var id = "@drawable/ic_"+current_city.consolidated_weather?.get(0)?.weather_state_abbr
+            var img_res = applicationContext.resources.getIdentifier(id,null,applicationContext.packageName)
+            var logo_draw = applicationContext.resources.getDrawable(img_res)
+            binding.scWeatherImg.load(logo_draw){
+                placeholder(R.drawable.ic_wind)
+            }
 
             binding.wiTemp.wDesc.text = getString(R.string.min_max_temp)
             binding.wiTemp.wIcon.load(R.drawable.ic_thermostat)
