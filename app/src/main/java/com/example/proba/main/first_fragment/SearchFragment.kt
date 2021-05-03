@@ -68,18 +68,28 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, Search
         adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this, this)
         binding.searchRecyclerView.adapter = adapter
         apiViewModel.api_search.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
+            Log.d("QUERY_IS_NULL","outside")
+            if (it != null && binding.searchView.query.isNotBlank() && binding.searchView.query.isNotEmpty()) {
                 Toast.makeText(this.requireContext(), "Waiting for results",Toast.LENGTH_LONG).show()
                 apiViewModel.get_api_cities()
+            }
+            else if(binding.searchView.query.isNullOrBlank() || binding.searchView.query.isNullOrEmpty()){
+                Log.d("QUERY_IS_NULL","inside")
+                adapter.cities = ArrayList<City>()
+                adapter.notifyDataSetChanged()
             }
         })
 
         apiViewModel.api_cities.observe(viewLifecycleOwner, Observer {
-            if(it != null){
+            if(it != null && binding.searchView.query.isNotBlank() && binding.searchView.query.isNotEmpty()){
                 adapter.cities = it
                 adapter.notifyDataSetChanged()
                 Log.d("BEFORE_LIFTOF",it.toString())
-                roomViewModel.saveAndGetCities(it)
+//                roomViewModel.saveAndGetCities(it)
+            }
+            else{
+                adapter.cities = ArrayList<City>()
+                adapter.notifyDataSetChanged()
             }
         })
 
@@ -109,6 +119,8 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, Search
                     Log.d("BACK_API","got from search view")
                     if (isNetworkConnected())
                         apiViewModel.get_api_search(query)
+//                    else if(query == "")
+//                        Toast.makeText(context, "Please enter city name in the search bar",Toast.LENGTH_LONG).show()
                     else
                         Toast.makeText(context, "No internet connection, please connect",Toast.LENGTH_LONG).show()
                 }
@@ -131,6 +143,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, Search
         if (adapter.cities[position].woeid != null ) {
 
                     current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+                    roomViewModel.saveAndGetCities(current_city)
                     current_city.consolidated_weather?.get(0)?.applicable_date?.let {
                         Log.d("DAY_API",adapter.cities[position].woeid.toString())
                         Log.d("DAY_API",it)

@@ -1,6 +1,7 @@
 package com.example.proba.room.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,6 +35,14 @@ class RoomViewModel(roomDB : AppDatabase): ViewModel() {
     fun insertCities(cities : List<City>){
         viewModelScope.launch {
             roomDB.cityDao().insertAll(cities)
+        }
+    }
+
+    fun saveAndGetCities(apiCity: City){
+        viewModelScope.launch {
+            roomDB.cityDao().insertCity(apiCity)
+            cities.value = roomDB.cityDao().getAllCities()
+            Log.d("CITY_SAVED",cities.value.toString())
         }
     }
 

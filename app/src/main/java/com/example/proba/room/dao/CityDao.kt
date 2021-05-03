@@ -12,4 +12,7 @@ interface CityDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(cities : List<City>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCity(city :City)
 }

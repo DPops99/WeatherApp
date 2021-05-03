@@ -9,7 +9,6 @@ import coil.load
 import com.example.proba.R
 import com.example.proba.databinding.CityItemViewBinding
 import com.example.proba.network.model.City
-import com.example.proba.network.model.Search
 import java.lang.Math.round
 
 class SearchAdapter(var cities : ArrayList<City>, val context : Context, var listener: SearchAdapter.OnItemClickListener?, var long_listener: OnItemLongClickListener)  : RecyclerView.Adapter<SearchAdapter.SearchHolder>(){
