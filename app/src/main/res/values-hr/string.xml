@@ -26,4 +26,13 @@
     <string name="snackbar_bundle">SNACKBAR BUNDLE</string>
     <string name="language_changed">Jezik promijenjen</string>
     <string name="undo">PONISTI</string>
+    <string name="min_max_temp">MIN / MAX</string>
+    <string name="wind">VJETAR</string>
+    <string name="humidity">VLAZNOST</string>
+    <string name="pressure">TLAK</string>
+    <string name="visibilty">VIDLJIVOST</string>
+    <string name="accuracy">TOČNOST</string>
+    <string name="today">Danas</string>
+    <string name="next_days">Sljedecih 5 dana</string>
+    <string name="search">Pretrazi</string>
 </resources>

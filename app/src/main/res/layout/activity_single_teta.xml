@@ -25,6 +25,7 @@
             app:contentScrim="@color/design_default_color_primary"
             >
 
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
