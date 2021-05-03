@@ -137,7 +137,10 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, Search
     override fun onItemLongClick(position: Int) {
         if (adapter.cities[position].woeid != null ) {
 
-                    current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+//                    current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+//                    Log.d("APICITY",apiViewModel.api_cities.value?.get(position)?.title)
+//                    Log.d("ADAPTERCITY",adapter.cities[position].title)
+                    current_city = adapter.cities[position]
                     current_city.recent = true
                     roomViewModel.saveAndGetCities(current_city)
                     current_city.consolidated_weather?.get(0)?.applicable_date?.let {
@@ -149,7 +152,8 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, Search
     }
 
     override fun onItemClick(position: Int, isFav : Boolean) {
-        current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+//        current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+        current_city = adapter.cities[position]
         current_city.favorite = isFav
         roomViewModel.saveAndGetFavCity(current_city)
 

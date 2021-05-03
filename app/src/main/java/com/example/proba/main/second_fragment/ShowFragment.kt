@@ -33,6 +33,7 @@ class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapte
     private lateinit var roomDB : AppDatabase
     private lateinit var roomViewModel : RoomViewModel
     private lateinit var roomViewModelFactory : RoomFactory
+    private lateinit var current_city : City
     private val itemTouchHelper by lazy {
 
         val simpleItemTouchCallback =
@@ -75,7 +76,7 @@ class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapte
 
     fun setView(){
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), null, this)
+        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this, this)
         binding.recyclerView.adapter = adapter
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
         roomViewModel.fav_cities.observe(viewLifecycleOwner, Observer {
@@ -87,7 +88,9 @@ class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapte
     }
 
     override fun onItemClick(position: Int, isFav : Boolean) {
-
+        current_city = adapter.cities[position]
+        current_city.favorite = isFav
+        roomViewModel.saveAndGetFavCity(current_city)
     }
 
     override fun onItemLongClick(position: Int) {
