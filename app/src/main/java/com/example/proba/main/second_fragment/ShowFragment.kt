@@ -27,11 +27,8 @@ import com.example.proba.singleTeta.SingleTetaActivity
 
 class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapter.OnItemLongClickListener{
 
-    private val viewModel : CustomViewModel by activityViewModels()
-    private val apiViewModel : ApiViewModel by activityViewModels()
     private var _binding : ShowFragmentBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var adapter :TetaAdapter
     private lateinit var adapter: SearchAdapter
     private lateinit var roomDB : AppDatabase
     private lateinit var roomViewModel : RoomViewModel
@@ -41,12 +38,10 @@ class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapte
         val simpleItemTouchCallback =
                 object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,0 ){
                     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                        val show_adapter = recyclerView.adapter as SearchAdapter
+
                         val from = viewHolder.adapterPosition
                         val to = target.adapterPosition
 
-//                        show_adapter.moveItem(from, to)
-//                        show_adapter.notifyItemMoved(from, to)
                         adapter.moveItem(from,to)
                         adapter.notifyItemMoved(from, to)
                         return true
@@ -73,26 +68,14 @@ class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapte
         roomViewModelFactory = RoomFactory(roomDB)
         roomViewModel = ViewModelProvider(this,roomViewModelFactory).get(RoomViewModel::class.java)
         setView()
-//        adapter = TetaAdapter(viewModel.tete.value!!,requireContext(), this)
-//        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        binding.recyclerView.adapter = adapter
-//
-//        viewModel.tete.observe(viewLifecycleOwner, Observer {
-//            adapter.tete = it
-//            adapter.notifyDataSetChanged()
-//        })
-
 
         return view
     }
 
 
     fun setView(){
-
-
-
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this, this)
+        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), null, this)
         binding.recyclerView.adapter = adapter
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
         roomViewModel.fav_cities.observe(viewLifecycleOwner, Observer {
@@ -108,11 +91,6 @@ class ShowFragment : Fragment(), SearchAdapter.OnItemClickListener, SearchAdapte
     }
 
     override fun onItemClick(position: Int, isFav : Boolean) {
-//        val bundle : Bundle = Bundle()
-//        bundle.putSerializable(getString(R.string.teta_menza_bundle),adapter.tete[position])
-//        val intent : Intent = Intent(this.context, SingleTetaActivity::class.java)
-//        intent.putExtra(getString(R.string.teta_menza_bundle),adapter.tete[position])
-//        startActivity(intent)
 
     }
 

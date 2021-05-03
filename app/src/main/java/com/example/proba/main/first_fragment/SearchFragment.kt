@@ -79,7 +79,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, Search
                 adapter.cities = it
                 adapter.notifyDataSetChanged()
                 Log.d("BEFORE_LIFTOF",it.toString())
-                roomViewModel.saveAndGetCities(it, roomDB)
+                roomViewModel.saveAndGetCities(it)
             }
         })
 
@@ -142,9 +142,9 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, Search
     override fun onItemClick(position: Int, isFav : Boolean) {
         current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
         if (isFav)
-            roomViewModel.saveAndGetFavCities(Favorite(0,current_city), roomDB)
+            roomViewModel.saveAndGetFavCities(Favorite(0,current_city))
         else
-            roomViewModel.deleteAndGetFavCities(Favorite(0,current_city),roomDB)
+            roomViewModel.deleteAndGetFavCities(Favorite(0,current_city))
     }
 
 

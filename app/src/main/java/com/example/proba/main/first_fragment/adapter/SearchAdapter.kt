@@ -12,7 +12,7 @@ import com.example.proba.network.model.City
 import com.example.proba.network.model.Search
 import java.lang.Math.round
 
-class SearchAdapter(var cities : ArrayList<City>, val context : Context, var listener: SearchAdapter.OnItemClickListener, var long_listener: OnItemLongClickListener)  : RecyclerView.Adapter<SearchAdapter.SearchHolder>(){
+class SearchAdapter(var cities : ArrayList<City>, val context : Context, var listener: SearchAdapter.OnItemClickListener?, var long_listener: OnItemLongClickListener)  : RecyclerView.Adapter<SearchAdapter.SearchHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
         return SearchHolder(CityItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -33,21 +33,25 @@ class SearchAdapter(var cities : ArrayList<City>, val context : Context, var lis
         var logo_draw = context.resources.getDrawable(img_res)
         holder.binding.cityWImg.load(logo_draw)
 
-        holder.binding.imgStar.setOnClickListener {
+        if (listener!=null){
+            holder.binding.imgStar.setOnClickListener {
 
-            var isFav = false
-            if(holder.binding.imgStar.tag==null) {
-                holder.binding.imgStar.load(R.drawable.ic_star_0)
-                holder.binding.imgStar.tag = "0"
-                isFav = false
+
+                    var isFav = false
+                    if (holder.binding.imgStar.tag == null) {
+                        holder.binding.imgStar.load(R.drawable.ic_star_0)
+                        holder.binding.imgStar.tag = "0"
+                        isFav = false
+                    } else {
+                        holder.binding.imgStar.load(R.drawable.ic_star_1)
+                        holder.binding.imgStar.tag = null
+                        isFav = true
+                    }
+                    listener?.onItemClick(position, isFav)
             }
-            else {
-                holder.binding.imgStar.load(R.drawable.ic_star_1)
-                holder.binding.imgStar.tag=null
-                isFav = true
-            }
-            listener.onItemClick(position, isFav)
         }
+        else
+            holder.binding.imgStar.load(R.drawable.ic_star_1)
 
     }
 
