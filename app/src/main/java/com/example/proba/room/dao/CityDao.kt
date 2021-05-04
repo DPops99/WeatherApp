@@ -1,6 +1,6 @@
 package com.example.proba.room.dao
 
-import androidx.lifecycle.LiveData
+
 import androidx.room.*
 import com.example.proba.network.model.City
 

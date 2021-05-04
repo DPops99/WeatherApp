@@ -9,8 +9,40 @@
         android:id="@+id/show_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/my_cities"
-        />
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:id="@+id/show_layout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_cities"
+                android:textColor="@color/white"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/show_cal"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_icon_2"
+                android:layout_alignEnd="@+id/show_edit"
+                android:layout_marginEnd="48dp"
+
+                />
+            <ImageView
+                android:id="@+id/show_edit"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_icon_1"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"/>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

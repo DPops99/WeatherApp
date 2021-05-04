@@ -1,14 +1,14 @@
 package com.example.proba.room.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.proba.room.database.AppDatabase
 
-class RoomFactory(val roomDB : AppDatabase) : ViewModelProvider.Factory {
+class RoomFactory(val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
         if(modelClass.isAssignableFrom(RoomViewModel::class.java))
-            return RoomViewModel(roomDB) as T
+            return RoomViewModel(context) as T
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

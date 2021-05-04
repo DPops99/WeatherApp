@@ -13,7 +13,8 @@
         android:id="@+id/custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
