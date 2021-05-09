@@ -3,7 +3,7 @@
     package="com.example.proba">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Custom">
-        <activity android:name=".singleCity.SingleCityActivity"
-            android:parentActivityName=".main.MainActivity">
-
-        </activity>
+        <activity android:name=".aboutMe.AboutMeActivity"></activity>
+        <activity
+            android:name=".singleCity.SingleCityActivity"
+            android:parentActivityName=".main.MainActivity"></activity>
         <activity android:name=".singleTeta.SingleTetaActivity" />
         <activity
             android:name=".main.MainActivity"
