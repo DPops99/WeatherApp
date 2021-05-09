@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Custom">
-        <activity android:name=".aboutMe.AboutMeActivity"></activity>
+        <activity android:name=".aboutMe.AboutMeActivity"
+            android:parentActivityName=".main.MainActivity"></activity>
         <activity
             android:name=".singleCity.SingleCityActivity"
             android:parentActivityName=".main.MainActivity"></activity>

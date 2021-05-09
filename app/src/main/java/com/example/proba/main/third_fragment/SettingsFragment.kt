@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.proba.R
+import com.example.proba.aboutMe.AboutMeActivity
 import com.example.proba.databinding.SettingsLayoutBinding
 import com.example.proba.helper.ConverterHelper
 import com.example.proba.helper.LanguageHelper
@@ -73,6 +74,10 @@ class SettingsFragment : Fragment() {
             setLocale(languageStringChanger(parent.getItemAtPosition(position) as String, langArray ), requireContext())}
         binding.settingsRadio.setOnCheckedChangeListener { group, checkedId -> if(checkedId==R.id.settings_metric) ConverterHelper.setPreferedMetric(requireContext(), ConverterHelper.DEFAULT_METRIC)
                                                             else ConverterHelper.setPreferedMetric(requireContext(), IMPERIAL)}
+
+        binding.moreInfoBtn.setOnClickListener {
+            startActivity(Intent(context, AboutMeActivity::class.java))
+        }
 
     }
 
