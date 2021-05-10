@@ -56,4 +56,6 @@
     <string name="api_credit">metaweather</string>
     <string name="developer">Developer</string>
     <string name="dev_name">Danijel Popović</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
