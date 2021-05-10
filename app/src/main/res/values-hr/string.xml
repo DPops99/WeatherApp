@@ -35,4 +35,6 @@
     <string name="today">Danas</string>
     <string name="next_days">Sljedecih 5 dana</string>
     <string name="search">Pretrazi</string>
+    <string name="my_cities">Moji gradovi</string>
+    <string name="recent">Nedavno</string>
 </resources>

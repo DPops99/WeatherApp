@@ -25,6 +25,19 @@
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
+        <ImageView
+            android:id="@+id/img_star"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_star_0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:tag="0"
+            />
+
+
         <TextView
             android:id="@+id/city_latt_long"
             android:layout_width="wrap_content"

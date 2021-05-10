@@ -5,36 +5,34 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.proba.databinding.SearchFragmentBinding
 import com.example.proba.main.first_fragment.adapter.SearchAdapter
 import com.example.proba.main.view_model.ApiViewModel
 import com.example.proba.network.model.City
-import com.example.proba.network.model.Day
-import com.example.proba.network.model.Search
+import com.example.proba.room.viewmodel.RoomFactory
+import com.example.proba.room.viewmodel.RoomViewModel
 import com.example.proba.singleCity.SingleCityActivity
-import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 
-class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
+class SearchFragment : Fragment(), SearchAdapter.OnItemLongClickListener, SearchAdapter.OnItemClickListener {
 
     private val apiViewModel : ApiViewModel by activityViewModels()
+    private lateinit var roomViewModel : RoomViewModel
+    private lateinit var roomViewModelFactory : RoomFactory
     private var _binding : SearchFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter : SearchAdapter
-    private var current_adapter_position : Int? = null
     private lateinit var current_city : City
     val day_bundle = "DAY_BUNDLE"
     val city_bundle = "CITY_BUNDLE"
@@ -46,6 +44,9 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     ): View? {
         _binding = SearchFragmentBinding.inflate(inflater,container,false)
         val view = binding.root
+        roomViewModelFactory = RoomFactory(requireContext())
+        roomViewModel = ViewModelProvider(this,roomViewModelFactory).get(RoomViewModel::class.java)
+
         setView()
         return view
     }
@@ -54,20 +55,38 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     fun setView(){
 
         binding.searchRecyclerView.layoutManager =  LinearLayoutManager(requireContext())
-        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this)
+        adapter = SearchAdapter(ArrayList<City>(),this.requireContext(), this, this)
         binding.searchRecyclerView.adapter = adapter
         apiViewModel.api_search.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
+            Log.d("QUERY_IS_NULL","outside")
+            if (it != null && binding.searchView.query.isNotBlank() && binding.searchView.query.isNotEmpty()) {
                 Toast.makeText(this.requireContext(), "Waiting for results",Toast.LENGTH_LONG).show()
                 apiViewModel.get_api_cities()
             }
         })
 
         apiViewModel.api_cities.observe(viewLifecycleOwner, Observer {
-            if(it != null){
+            if(it != null && binding.searchView.query.isNotBlank() && binding.searchView.query.isNotEmpty()){
+                binding.recent.visibility = View.INVISIBLE
                 adapter.cities = it
                 adapter.notifyDataSetChanged()
                 Log.d("BEFORE_LIFTOF",it.toString())
+            }
+        })
+
+
+        roomViewModel.cities.observe(viewLifecycleOwner, Observer {
+            if(it!=null){
+
+                if (binding.searchView.query.isNullOrBlank() || binding.searchView.query.isNullOrEmpty()){
+                    binding.recent.visibility = View.VISIBLE
+                    adapter.cities = it as ArrayList<City>
+                    adapter.notifyDataSetChanged()
+                }
+                Log.d("ROOMVIEWMODEL",it.toString())
+            }
+            else{
+                Log.d("ROOMVIEWMODEL","it is null")
             }
         })
 
@@ -99,19 +118,35 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                 return false
             }
         })
+
+        roomViewModel.fav_cities.observe(viewLifecycleOwner, Observer {
+            Log.d("FAVORITE_SAVED",it.toString())
+        })
+
+
     }
 
 
-    override fun onItemClick(position: Int) {
+    override fun onItemLongClick(position: Int) {
         if (adapter.cities[position].woeid != null ) {
 
-                    current_city = apiViewModel.api_cities.value?.filter { it.title == adapter.cities[position].title }?.get(0)!!
+                    current_city = adapter.cities[position]
+                    current_city.recent = true
+                    roomViewModel.saveAndGetCities(current_city)
                     current_city.consolidated_weather?.get(0)?.applicable_date?.let {
                         Log.d("DAY_API",adapter.cities[position].woeid.toString())
                         Log.d("DAY_API",it)
                         apiViewModel.get_api_day(adapter.cities[position].woeid!!, it)
                     }
                 }
+    }
+
+    override fun onItemClick(position: Int, isFav : Boolean) {
+
+        current_city = adapter.cities[position]
+        current_city.favorite = isFav
+        roomViewModel.saveAndGetFavCity(current_city)
+
     }
 
 
