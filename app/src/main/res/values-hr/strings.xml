@@ -39,8 +39,8 @@
     <string name="recent">Nedavno</string>
     <string name="language_en">Engleski</string>
     <string name="language_hr">Hrvatski</string>
-    <string name="clear_fav_cities">IZBRIŠI LISTU VLASTITIH GRADOVA</string>
-    <string name="clear_recent_cities">IZBRIŠI LISTU </string>
+    <string name="clear_fav_cities">IZBRIŠI VLASTITE GRADOVE</string>
+    <string name="clear_recent_cities">IZBRIŠI NEDAVNO VIĐENE GRADOVE</string>
     <string name="metric">Metrički</string>
     <string name="imperial">Imperijalni</string>
     <string name="unit_type">Odaberi mjernu jedinicu</string>

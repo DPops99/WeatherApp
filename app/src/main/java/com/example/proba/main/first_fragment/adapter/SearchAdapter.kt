@@ -26,11 +26,9 @@ class SearchAdapter(var cities : ArrayList<City>, val context : Context, var lis
         holder.binding.cityDistance.text = cities[position].timezone_name
 
         val ll = cities[position].latt_long!!.split(",")
-//        holder.binding.cityLattLong.text = """${(round(ll[0].toFloat() * 100) / 100)} ${(round(ll[1].toFloat() * 100) / 100)}"""
-        holder.binding.cityLattLong.text = LocationConverter.latitudeAsDMS(ll[0].toDouble(), 2)+" "+
-                    LocationConverter.longitudeAsDMS(ll[1].toDouble() , 2)
+        holder.binding.cityLattLong.text = LocationConverter.latitudeAsDMS(ll[0].toDouble(), 2)+" "+LocationConverter.longitudeAsDMS(ll[1].toDouble() , 2)
 
-        holder.binding.cityTemp.text = """${cities[position].consolidated_weather?.get(0)?.the_temp?.toInt().toString()}°"""
+
         holder.binding.cityTemp.text = ConverterHelper.temp(cities[position].consolidated_weather?.get(0)?.the_temp, context).toString()+"°"
 
         holder.binding.cityWImg.load(WrapperHelperObject.getDrawableResursFromString(cities[position].consolidated_weather?.get(0)?.weather_state_abbr,context))

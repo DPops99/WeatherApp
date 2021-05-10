@@ -27,64 +27,24 @@ object LanguageHelper {
     @JvmStatic
     @JvmOverloads
     fun wrapLanguage(context: Context) : Context{
-//        val localeCode = getPreferredLanguage(context)
-//        Log.d("CURRENT_LANGUAGE", localeCode)
-//        val supportedCodeList = context.resources.getStringArray(R.array.supported_languages)
+        val localeCode = getPreferredLanguage(context)
+        Log.d("CURRENT_LANGUAGE", localeCode)
+        val supportedCodeList = context.resources.getStringArray(R.array.supported_languages)
 
-//        if (localeCode != LOCALE_DEFAULT && supportedCodeList.contains(localeCode)) {
-//            val locale = createLocale(localeCode)
-//            val configuration = Configuration(context.resources.configuration)
-//            configuration.setLocale(locale)
-//            Locale.setDefault(locale)
-//            context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
-//        }
-
-        val locale = createLocale(getPreferredLanguage(context))
-//        val res = context.resources
-//        val dm = res.displayMetrics
-        val conf = Configuration(context.resources.configuration)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            conf.setLocale(locale)
+        if (localeCode != LOCALE_DEFAULT && supportedCodeList.contains(localeCode)) {
+            val locale = createLocale(localeCode)
+            val configuration = Configuration(context.resources.configuration)
+            configuration.setLocale(locale)
             Locale.setDefault(locale)
-//            val localList = LocaleList(locale)
-//            LocaleList.setDefault(localList)
-//            conf.setLocales(localList)
+            context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
         }
-        else {
-            conf.locale = locale
-            Locale.setDefault(locale)
-
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-            context.createConfigurationContext(conf)
-        else
-            context.resources.updateConfiguration(conf,context.resources.displayMetrics)
-
-        //        locale = Locale(localeName)
-//        val res = resources
-//        val dm = res.displayMetrics
-//        val conf = res.configuration
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-//            val localList = LocaleList(locale)
-//            LocaleList.setDefault(localList)
-//            conf.setLocales(localList)
-//        }
-//        else
-//            conf.locale = locale
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-//            context?.createConfigurationContext(conf)
-//        else
-//            res.updateConfiguration(conf,dm)
         return context
     }
 
 
     fun createLocale(languageCode: String): Locale {
         Log.d("DANIJEL","createLOcale is "+languageCode)
-//        val parts = languageCode.split("-")
-//        return Locale(parts[0]).takeIf { parts.size == 1 } ?: Locale(parts[0], parts[1])
-        return Locale(languageCode)
+        val parts = languageCode.split("-")
+        return Locale(parts[0]).takeIf { parts.size == 1 } ?: Locale(parts[0], parts[1])
     }
 }

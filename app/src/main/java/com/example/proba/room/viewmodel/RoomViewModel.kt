@@ -73,13 +73,20 @@ class RoomViewModel(context: Context): ViewModel() {
         viewModelScope.launch {
             roomDB.cityDao().deleteRecentCities()
             cities.value = roomDB.cityDao().getAllCities()
+            cities.value!!.forEach {
+                if(it.recent == true)
+                    it.recent = false
+            }
+            roomDB.cityDao().insertAll(cities.value!!)
+
+            cities.value = roomDB.cityDao().getAllCities()
         }
     }
 
     fun deleteFavoriteCities(){
         viewModelScope.launch {
             roomDB.cityDao().deleteFavoriteCities()
-            cities.value = roomDB.cityDao().getFavoriteCities()
+            fav_cities.value = roomDB.cityDao().getFavoriteCities()
         }
     }
 
