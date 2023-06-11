@@ -1,4 +1,4 @@
-# SofaScoreAndroid
+# Weather App
 
 Weather App
 
